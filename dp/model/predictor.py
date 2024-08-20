@@ -68,8 +68,7 @@ class Predictor:
             tokens, probs = predictions[word]
             out_phons = self.phoneme_tokenizer.decode(
                 sequence=tokens, remove_special_tokens=True)
-            out_phons_tokens = self.phoneme_tokenizer.decode(
-                sequence=tokens, remove_special_tokens=False)
+            out_phons_tokens = self.phoneme_tokenizer.remove_special_tokens(tokens)
             output.append(Prediction(word=word,
                                      phonemes=''.join(out_phons),
                                      phoneme_tokens=out_phons_tokens,

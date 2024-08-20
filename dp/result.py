@@ -9,7 +9,7 @@ class Prediction:
     def __init__(self,
                  word: str,
                  phonemes: str,
-                 phoneme_tokens: List[str],
+                 phoneme_tokens: List[int],
                  confidence: float,
                  token_probs: List[float]) -> None:
         """
@@ -40,7 +40,7 @@ class PhonemizerResult:
                  phonemes: List[str],
                  split_text: List[List[str]],
                  split_phonemes: List[List[str]],
-                 predictions: Dict[str, Prediction]) -> None:
+                 predictions: List[Prediction]) -> None:
         """
         Initializes a PhonemizerResult object.
 

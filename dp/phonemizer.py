@@ -112,16 +112,11 @@ class Phonemizer:
                                                           lang=lang,
                                                           punc_set=punc_set)
 
-        # predict all subwords that are missing in the phoneme dict
-        words_to_predict = [word for word, phons in word_phonemes.items()
-                            if phons is None and len(word_splits.get(word, [])) <= 1]
-
-        predictions = self.predictor(words=words_to_predict,
+        predictions = self.predictor(words=word_phonemes,
                                      lang=lang,
                                      batch_size=batch_size)
 
         word_phonemes.update({pred.word: pred.phonemes for pred in predictions})
-        pred_dict = {pred.word: pred for pred in predictions}
 
         # collect all phonemes
         phoneme_lists = []
@@ -139,7 +134,7 @@ class Phonemizer:
                                 phonemes=phonemes_joined,
                                 split_text=split_text,
                                 split_phonemes=phoneme_lists,
-                                predictions=pred_dict)
+                                predictions=predictions)
 
     def _get_dict_entry(self,
                         word: str,

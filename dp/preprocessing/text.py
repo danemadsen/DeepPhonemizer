@@ -134,6 +134,18 @@ class SequenceTokenizer:
         if remove_special_tokens:
             decoded = [d for d in decoded if d not in self.special_tokens]
         return decoded
+    
+    def remove_special_tokens(self, sequence: Iterable[int]) -> List[int]:
+        """Removes special tokens from a sequence of indices.
+
+        Args:
+          sequence (Iterable[int]): Encoded sequence to be decoded.
+
+        Returns:
+           List[int]: Sequence of indices without special tokens.
+        """
+
+        return [t for t in sequence if self.idx_to_token[int(t)] not in self.special_tokens]
 
     def _get_start_index(self, language: str) -> int:
         lang_token = self._make_start_token(language)
