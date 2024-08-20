@@ -3,7 +3,7 @@ from typing import Dict, List, Tuple
 import torch
 from torch.nn.utils.rnn import pad_sequence
 
-from dp import Prediction
+from dp.result import Prediction
 from dp.model.model import load_checkpoint
 from dp.model.utils import _get_len_util_stop
 from dp.preprocessing.text import Preprocessor

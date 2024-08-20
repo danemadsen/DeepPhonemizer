@@ -2,7 +2,7 @@ import re
 from itertools import zip_longest
 from typing import Dict, Union, List, Set
 
-from dp import PhonemizerResult
+from dp.result import PhonemizerResult
 from dp.model.model import load_checkpoint
 from dp.model.predictor import Predictor
 from dp.utils.logging import get_logger
