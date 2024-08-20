@@ -5,9 +5,9 @@ if __name__ == '__main__':
     checkpoint_path = 'checkpoints/latin_ipa_forward.pt'
     phonemizer = Phonemizer.from_checkpoint(checkpoint_path)
 
-    text = 'Hello world. This is a test.'
+    text = ['hello', 'world.', 'this', 'is', 'a', 'test.']
 
-    result = phonemizer.phonemise_list([text], lang='en_us')
+    result = phonemizer.phonemise_list(text, lang='en_us')
 
     print(result.phonemes)
     print(result.predictions)

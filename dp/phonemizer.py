@@ -83,20 +83,21 @@ class Phonemizer:
         punc_set = set(punctuation + '- ')
         punc_pattern = re.compile(f'([{punctuation + " "}])')
 
-        split_text, cleaned_words = [], set()
+        split_text, cleaned_words, cleaned_words_set = [], [], set()
         for text in texts:
             cleaned_text = ''.join([t for t in text if t.isalnum() or t in punc_set])
+            cleaned_words.append(cleaned_text)
             split = re.split(punc_pattern, cleaned_text)
             split = [s for s in split if len(s) > 0]
             split_text.append(split)
-            cleaned_words.update(split)
+            cleaned_words_set.update(split)
 
         # collect dictionary phonemes for words and hyphenated words
         word_phonemes = {word: self._get_dict_entry(word=word, lang=lang, punc_set=punc_set)
-                         for word in cleaned_words}
+                         for word in cleaned_words_set}
 
         # if word is not in dictionary, split it into subwords
-        words_to_split = [w for w in cleaned_words if word_phonemes[w] is None]
+        words_to_split = [w for w in cleaned_words_set if word_phonemes[w] is None]
         word_splits = dict()
         for word in words_to_split:
             key = word
@@ -112,7 +113,7 @@ class Phonemizer:
                                                           lang=lang,
                                                           punc_set=punc_set)
 
-        predictions = self.predictor(words=word_phonemes,
+        predictions = self.predictor(words=cleaned_words,
                                      lang=lang,
                                      batch_size=batch_size)
 
