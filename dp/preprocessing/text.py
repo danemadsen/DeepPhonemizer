@@ -90,6 +90,7 @@ class SequenceTokenizer:
             self.token_to_idx[symbol] = len(self.token_to_idx)
         self.idx_to_token = {i: s for s, i in self.token_to_idx.items()}
         self.vocab_size = len(self.idx_to_token)
+        self.symbols = symbols
 
     def __call__(self, sentence: Iterable[str], language: str) -> List[int]:
         """

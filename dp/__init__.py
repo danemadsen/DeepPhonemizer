@@ -18,3 +18,17 @@ def text_to_sequence(text):
         tokens.append(0)
     
     return tokens
+
+def sequence_to_text(sequence):
+    phonemizer = Phonemizer.from_checkpoint(default_checkpoint)
+    inx_to_token = phonemizer.predictor.phoneme_tokenizer.idx_to_token
+    punctuation = ['.', ',', ':', ';', '?', '!', '\"', '(', ')', '-']
+
+    result = ''
+    for token in sequence:
+        if token >= len(inx_to_token):
+            result += punctuation[token - len(inx_to_token)]
+        else:
+            result += inx_to_token[token]
+
+    return result.replace('_', ' ')
