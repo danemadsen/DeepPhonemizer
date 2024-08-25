@@ -112,6 +112,27 @@ class SequenceTokenizer:
         if self.append_start_end:
             sequence = [self._get_start_index(language)] + sequence + [self.end_index]
         return sequence
+    
+    def encode(self, text: str, language: str) -> List[int]:
+        """
+        Encodes a string (e.g., a punctuation mark) into its token index.
+
+        Args:
+          text (str): The text or punctuation mark to encode.
+          language (str): The language for which the text is being encoded.
+
+        Returns:
+           List[int]: Encoded token index.
+        """
+        punctuation = ['.', ',', ':', ';', '?', '!', '\"', '(', ')', '-']
+
+        if self.lowercase:
+            text = text.lower()
+        if text in self.token_to_idx:
+            return [self.token_to_idx[text]]
+        else:
+            if text in punctuation:
+                return [len(self.token_to_idx) + punctuation.index(text)]
 
     def decode(self, sequence: Iterable[int], remove_special_tokens: bool = False) -> List[str]:
         """Maps a sequence of indices to a sequence of symbols.

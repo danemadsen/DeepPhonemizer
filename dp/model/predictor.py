@@ -69,6 +69,11 @@ class Predictor:
             out_phons = self.phoneme_tokenizer.decode(
                 sequence=tokens, remove_special_tokens=True)
             out_phons_tokens = self.phoneme_tokenizer.remove_special_tokens(tokens)
+
+            if word[-1] in ['.', ',', ':', ';', '?', '!', '\"', '(', ')', '-']:
+                punctuation_tokens = self.phoneme_tokenizer.encode(word[-1], language=lang)
+                out_phons_tokens += punctuation_tokens
+
             output.append(Prediction(word=word,
                                      phonemes=''.join(out_phons),
                                      phoneme_tokens=out_phons_tokens,
@@ -129,4 +134,3 @@ class Predictor:
         model, checkpoint = load_checkpoint(checkpoint_path, device=device)
         preprocessor = checkpoint['preprocessor']
         return Predictor(model=model, preprocessor=preprocessor)
-
